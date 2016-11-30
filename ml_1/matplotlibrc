@@ -1,0 +1,2 @@
+## Could also use matplotlib.use('Agg')
+backend: agg
