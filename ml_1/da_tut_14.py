@@ -24,6 +24,9 @@ def main():
     ## Print correlation
     print(HPI.corr())
 
+    ## This is used in the next tut
+    HPI.to_pickle('pickles/HPI.pickle')
+
 
 def fiddy_states():
     states = pd.read_html('https://simple.wikipedia.org/wiki/List_of_U.S._states')
@@ -33,7 +36,7 @@ def states_HPI():
     '''
     Get HPI for each state
     '''
-    pckl = Path('pickles/tut_14.py')
+    pckl = Path('pickles/tut_14.pickle')
     if pckl.is_file():
         print('Loading from archive')
         main_df = pd.read_pickle(str(pckl))

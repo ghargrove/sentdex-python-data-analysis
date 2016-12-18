@@ -38,3 +38,4 @@ pip install pandas-datareader
 pip install html5lib
 pip install lxml
 pip install bs4 # BeautifulSoup4
+pip install openpyxl
