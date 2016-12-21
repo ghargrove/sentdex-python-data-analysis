@@ -18,11 +18,11 @@ def main():
     HPI_bench = benchmark_HPI()
     unemployment = us_unemployment()
 
-    HPI = HPI_bench.join([m30, sp500, gdp, unemployment])
+    HPI = HPI_data.join([HPI_bench, m30, sp500, gdp, unemployment])
     HPI.dropna(inplace=True)
 
     ## Print correlation
-    print(HPI.corr())
+    # print(HPI.corr())
 
     ## This is used in the next tut
     HPI.to_pickle('pickles/HPI.pickle')
@@ -64,7 +64,7 @@ def benchmark_HPI():
     print('Getting benchmark')
     df = ql.get('FMAC/HPI_USA')
     df.rename(columns={'Value': 'HPI_US'}, inplace=True)
-    df['HPI_US'] = (df['HPI_US'] - df['HPI_US'][0]) / df['HPI_US'][0] * 100
+    df['HPI_US'] = (df['HPI_US'] - df['HPI_US'][0]) / df['HPI_US'][0] * 100.0
     return df
 
 def mortgage_30y():
@@ -74,19 +74,16 @@ def mortgage_30y():
     print('Getting 30yr M')
     df = ql.get('FMAC/MORTG')
     df.rename(columns={'Value': '30M'}, inplace=True)
-    df['30M'] = (df['30M'] - df['30M'][0]) / df['30M'][0] * 100
+    df['30M'] = (df['30M'] - df['30M'][0]) / df['30M'][0] * 100.0
     df = df.resample('1D').mean()
     df = df.resample('M').mean()
     return df
 
 def sp500_data():
-    '''
-    Get S&P 500 index
-    '''
     print('Getting SP500')
     df = ql.get('YAHOO/INDEX_GSPC', start_date='1975-01-01')
     k = 'Adjusted Close'
-    df[k] = (df[k] - df[k][0]) / df[k][0] * 100
+    df[k] = (df[k] - df[k][0]) / df[k][0] * 100.0
     df = df.resample('M').mean()
     df.rename(columns={k: 'sp500'}, inplace=True)
     return df['sp500']
@@ -97,7 +94,7 @@ def gdp_data():
     '''
     print('Getting GDP')
     df = ql.get('BCB/4385', start_date='1975-01-01')
-    df['Value'] = (df['Value'] - df['Value'][0]) / df['Value'][0] * 100
+    df['Value'] = (df['Value'] - df['Value'][0]) / df['Value'][0] * 100.0
     df.rename(columns={'Value': 'GDP'}, inplace=True)
     df = df.resample('M').mean()
     return df['GDP']
@@ -109,7 +106,7 @@ def us_unemployment():
     print('Getting unemployment')
     df = ql.get('ECPI/JOB_G', start_date='1975-01-01')
     k = 'Unemployment Rate'
-    df[k] = (df[k] - df[k][0]) / df[k][0] * 100
+    df[k] = (df[k] - df[k][0]) / df[k][0] * 100.0
     df = df.resample('1D').mean()
     df = df.resample('M').mean()
     return df

@@ -34,6 +34,7 @@ def main():
         housing_data = pd.read_pickle(str(hpi_pickle))
         ## Get the pct change
         housing_data = housing_data.pct_change()
+
         ## Remove inf values
         housing_data.replace([np.inf, -np.inf], np.nan, inplace=True)
         ## Add a future column
@@ -47,16 +48,6 @@ def main():
         ## Perform a rolling apply
         housing_data['ma_apply_example'] = housing_data['30M'].rolling(10).apply(moving_averages)
         print(housing_data.tail())
-
-
-        ## Do some weird replace thing
-        # housing_data.replace([np.inf, -np.inf], np.nan, inplace=True)
-        # housing_data['US_HPI_future'] = housing_data['HPI_US'].shift(-1)
-        #
-        # housing_data.dropna(inplace=True)
-        #
-        # print(housing_data.tail())
-
 
     else:
         print('Could not load HPI data')
