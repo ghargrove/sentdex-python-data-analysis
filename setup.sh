@@ -1,6 +1,6 @@
 ## Initialize some stuff
 
-APP_DIR=/vagrant/ml_1
+APP_DIR=/vagrant/scripts
 
 sudo apt-get update
 
